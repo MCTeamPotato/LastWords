@@ -1,3 +1,6 @@
+/**
+ * This code is taken from portinglib and is licensed under the LGPL.
+ */
 package me.kall.lastwords.porting.mixin;
 
 import me.kall.lastwords.porting.event.LivingHurtEvent;
@@ -12,8 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = LivingEntity.class, priority = 999)
 public class LivingEntityMixin {
     @ModifyVariable(method = "actuallyHurt", at = @At(value = "LOAD", ordinal = 0), index = 2, argsOnly = true)
-    private float livingHurtEvent(float value, DamageSource pDamageSource) {
-        LivingHurtEvent event = new LivingHurtEvent((LivingEntity) (Object) this, pDamageSource, value);
+    private float livingHurtEvent(float value, DamageSource damageSource) {
+        LivingHurtEvent event = new LivingHurtEvent((LivingEntity) (Object) this, damageSource, value);
         event.sendEvent();
         return (event.isCanceled() ? 0 : event.getAmount());
     }

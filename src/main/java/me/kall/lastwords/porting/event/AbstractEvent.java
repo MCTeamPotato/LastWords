@@ -1,3 +1,6 @@
+/**
+ * This code is taken from portinglib and is licensed under the LGPL.
+ */
 package me.kall.lastwords.porting.event;
 
 public abstract class AbstractEvent {
