@@ -28,7 +28,10 @@ public final class LastWords {
             Entity attacker = event.getSource().getEntity();
             if (attacker instanceof Player lvBu && event.getAmount() >= attacked.getHealth()) {
                 if (attacked instanceof Player || attacked.isAlliedTo(lvBu)) {
-                    if (((DongZhuo)attacked).lastWords$said()) return;
+                    if (((DongZhuo)attacked).lastWords$said()) {
+                        ((DongZhuo)attacked).lastWords$setSaid(false);
+                        return;
+                    }
                     if (attacked.level().isClientSide()) return;
 
                     Component lvBuWords = Component.literal("<" + lvBu.getName().getString() + "> " + I18n.get("lv_bu.last_words"));
