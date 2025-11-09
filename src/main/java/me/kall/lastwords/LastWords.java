@@ -28,6 +28,7 @@ public final class LastWords {
             if (attacker instanceof Player lvBu && event.getAmount() >= attacked.getHealth()) {
                 if (attacked instanceof Player || attacked.isAlliedTo(lvBu)) {
                     if (((DongZhuo)attacked).lastWords$said()) return;
+                    if (attacked.level().isClientSide()) return;
 
                     Component lvBuWords = Component.literal("<" + lvBu.getName().getString() + "> 你，你可有何话说！");
                     Component dongZhuoWords = Component.literal("<" + attacked.getName().getString() + "> 再无话说，请速速动手！");
