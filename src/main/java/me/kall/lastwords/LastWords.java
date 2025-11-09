@@ -1,6 +1,7 @@
 package me.kall.lastwords;
 
 import me.kall.lastwords.ext.DongZhuo;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -30,8 +31,8 @@ public final class LastWords {
                     if (((DongZhuo)attacked).lastWords$said()) return;
                     if (attacked.level().isClientSide()) return;
 
-                    Component lvBuWords = Component.literal("<" + lvBu.getName().getString() + "> 你，你可有何话说！");
-                    Component dongZhuoWords = Component.literal("<" + attacked.getName().getString() + "> 再无话说，请速速动手！");
+                    Component lvBuWords = Component.literal("<" + lvBu.getName().getString() + "> " + I18n.get("lv_bu.last_words"));
+                    Component dongZhuoWords = Component.literal("<" + attacked.getName().getString() + "> " + I18n.get("dong_zhuo.last_words"));
 
                     lvBu.displayClientMessage(lvBuWords, false);
                     lvBu.displayClientMessage(dongZhuoWords, false);
