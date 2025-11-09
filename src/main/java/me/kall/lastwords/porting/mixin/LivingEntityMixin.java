@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(LivingEntity.class)
+@Mixin(value = LivingEntity.class, priority = 999)
 public class LivingEntityMixin {
     @ModifyVariable(method = "actuallyHurt", at = @At(value = "LOAD", ordinal = 0), index = 2, argsOnly = true)
     private float livingHurtEvent(float value, DamageSource pDamageSource) {
