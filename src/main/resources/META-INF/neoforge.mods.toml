@@ -1,0 +1,17 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+#issueTrackerURL = ""
+license = "MIT"
+
+[[mods]]
+modId = "lastwords"
+version = "${version}"
+displayName = "LastWords"
+authors = "Kall"
+description = '''
+A Minecraft mod
+'''
+#logoFile = ""
+
+[[mixins]]
+config = "lastwords.mixins.json"
