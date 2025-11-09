@@ -1,0 +1,29 @@
+{
+	"schemaVersion": 1,
+	"id": "lastwords",
+	"version": "${version}",
+	"name": "LastWords",
+	"description": "You—do you have anything to say?! \nNo more talk—get to work immediately!",
+	"authors": [
+		"Kall"
+	],
+	"contact": {
+		"sources": "https://github.com/MCTeamPotato/LastWords"
+	},
+	"license": "MIT",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"me.kall.lastwords.LastWords"
+		]
+	},
+	"mixins": [
+		"lastwords.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.17.3",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}
