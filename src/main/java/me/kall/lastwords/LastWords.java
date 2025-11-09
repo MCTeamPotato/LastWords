@@ -1,8 +1,8 @@
 package me.kall.lastwords;
 
 import me.kall.lastwords.ext.DongZhuo;
+import me.kall.lastwords.porting.event.LivingHurtEvent;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -20,15 +20,16 @@ public class LastWords implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
-            LivingEntity attacked = entity;
-            Entity attacker = source.getEntity();
-            if (attacker instanceof Player lvBu && amount >= attacked.getHealth()) {
+        LivingHurtEvent.HURT.register(event -> {
+            if (event.isCanceled()) return;
+            LivingEntity attacked = event.getEntity();
+            Entity attacker = event.getSource().getEntity();
+            if (attacker instanceof Player lvBu && event.getAmount() >= attacked.getHealth()) {
                 if (attacked instanceof Player || attacked.isAlliedTo(lvBu)) {
-                    //if (attacked.level().isClientSide()) return;
+                    if (attacked.level().isClientSide()) return;
                     if (((DongZhuo)attacked).lastWords$said()) {
                         ((DongZhuo)attacked).lastWords$setSaid(false);
-                        //return;
+                        return;
                     }
 
                     Component lvBuWords = Component.literal("<" + lvBu.getName().getString() + "> " + I18n.get("lv_bu.last_words"));
@@ -42,15 +43,13 @@ public class LastWords implements ModInitializer {
                         dongZhuo.displayClientMessage(dongZhuoWords, false);
                     }
 
-                    amount = attacked.getHealth() - 1F;
-                    //event.setAmount(attacked.getHealth() - 1F);
+                    event.setAmount(attacked.getHealth() - 1F);
                     attacked.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, -1, 120, false, false, false));
                     attacked.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, -1, 120, false, false, false));
 
                     ((DongZhuo) attacked).lastWords$setSaid(true);
                 }
             }
-            return true;
         });
     }
 }
