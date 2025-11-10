@@ -6,7 +6,6 @@ import com.llamalad7.mixinextras.sugar.Local;
 import me.kall.lastwords.LastWords;
 import me.kall.lastwords.ext.DongZhuo;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -14,6 +13,8 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -36,13 +37,13 @@ public abstract class LivingEntityMixin implements DongZhuo {
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
-    private void save(@NotNull CompoundTag compound, CallbackInfo ci) {
-        compound.putBoolean("LastWordsSaid", true);
+    private void save(ValueOutput valueOutput, CallbackInfo ci) {
+        valueOutput.putBoolean("LastWordsSaid", true);
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
-    private void load(@NotNull CompoundTag compound, CallbackInfo ci) {
-        this.lastWords$setSaid(compound.getBoolean("LastWordsSaid"));
+    private void load(@NotNull ValueInput valueInput, CallbackInfo ci) {
+        this.lastWords$setSaid(valueInput.getBooleanOr("LastWordsSaid", false));
     }
 
     @WrapOperation(method = "actuallyHurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;setHealth(F)V"))
@@ -70,7 +71,7 @@ public abstract class LivingEntityMixin implements DongZhuo {
                 health = 1F;
                 if (LastWords.effect) {
                     attacked.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, LastWords.duration, LastWords.amplifier, false, false, false));
-                    attacked.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, LastWords.duration, LastWords.amplifier, false, false, false));
+                    attacked.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, LastWords.duration, LastWords.amplifier, false, false, false));
                 }
                 ((DongZhuo) attacked).lastWords$setSaid(true);
             }
