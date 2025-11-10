@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "lastwords",
+  "version": "${version}",
+  "name": "LastWords",
+  "description": "A minecraft mod.",
+  "authors": [
+    "Kall"
+  ],
+  "contact": {
+    "homepage": "https://github.com/Kasualix",
+    "sources": "https://github.com/MCTeamPotato/Kasualix-Issue-Tracker"
+  },
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "me.kall.lastwords.fabric.LastWordsFabric"
+    ]
+  },
+  "mixins": [
+    "lastwords.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.18.0",
+    "minecraft": "~1.21.1"
+  }
+}
