@@ -8,18 +8,16 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.common.Mod;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 @Mod(LastWords.MOD_ID)
 public final class LastWords {
     public static final String MOD_ID = "lastwords";
     public static final String MOD_NAME = "LastWords";
-    public static final Logger LOGGER = LogManager.getLogger(MOD_NAME);
 
     public LastWords() {
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, (LivingDamageEvent event) -> {
@@ -46,12 +44,29 @@ public final class LastWords {
                     }
 
                     event.setAmount(attacked.getHealth() - 1F);
-                    attacked.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, -1, 120, false, false, false));
-                    attacked.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, -1, 120, false, false, false));
-
+                    if (Config.EFFECT.get()) {
+                        attacked.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, Config.EFFECT_DURATION.get(), Config.EFFECT_LEVEL.get(), false, false, false));
+                        attacked.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, Config.EFFECT_DURATION.get(), Config.EFFECT_LEVEL.get(), false, false, false));
+                    }
                     ((DongZhuo) attacked).lastWords$setSaid(true);
                 }
             }
         });
+    }
+
+    private static final class Config {
+        static final ForgeConfigSpec INSTANCE;
+        static final ForgeConfigSpec.BooleanValue EFFECT;
+        static final ForgeConfigSpec.IntValue EFFECT_DURATION, EFFECT_LEVEL;
+
+        static {
+            ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
+            builder.push(MOD_NAME);
+            EFFECT = builder.comment("Whether to apply weakness and slowness effect on Dong Zhuo when saying last words.").define("WeakAndSlow", true);
+            EFFECT_DURATION = builder.comment("-1 means infinite effect duration").defineInRange("EffectDuration", -1, -1, Integer.MAX_VALUE);
+            EFFECT_LEVEL = builder.defineInRange("EffectAmplifier", 120, 0, 120);
+            builder.pop();
+            INSTANCE = builder.build();
+        }
     }
 }
