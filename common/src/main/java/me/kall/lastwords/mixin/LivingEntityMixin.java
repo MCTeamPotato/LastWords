@@ -37,7 +37,7 @@ public abstract class LivingEntityMixin implements DongZhuo {
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
     private void save(@NotNull CompoundTag compound, CallbackInfo ci) {
-        compound.putBoolean("LastWordsSaid", true);
+        compound.putBoolean("LastWordsSaid", this.lastWords$said());
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
@@ -52,6 +52,7 @@ public abstract class LivingEntityMixin implements DongZhuo {
             if (attacked instanceof Player || attacked.isAlliedTo(lvBu)) {
                 if (((DongZhuo)attacked).lastWords$said()) {
                     ((DongZhuo)attacked).lastWords$setSaid(false);
+                    //noinspection MixinExtrasOperationParameters
                     original.call(attacked, health);
                     return;
                 }
