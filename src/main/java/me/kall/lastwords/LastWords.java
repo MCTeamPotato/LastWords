@@ -3,6 +3,7 @@ package me.kall.lastwords;
 import me.kall.lastwords.ext.DongZhuo;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -22,23 +23,25 @@ public final class LastWords {
     public LastWords() {
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, (LivingDamageEvent event) -> {
             if (event.isCanceled()) return;
-            LivingEntity attacked = event.getEntity();
+            LivingEntity attacked = event.getEntityLiving();
             Entity attacker = event.getSource().getEntity();
-            if (attacker instanceof Player lvBu && event.getAmount() >= attacked.getHealth()) {
+            if (attacker instanceof Player && event.getAmount() >= attacked.getHealth()) {
+                Player lvBu = (Player) attacker;
                 if (attacked instanceof Player || attacked.isAlliedTo(lvBu)) {
-                    if (attacked.level().isClientSide()) return;
+                    if (attacked.level.isClientSide()) return;
                     if (((DongZhuo)attacked).lastWords$said()) {
                         ((DongZhuo)attacked).lastWords$setSaid(false);
                         return;
                     }
 
-                    Component lvBuWords = Component.literal("<" + lvBu.getName().getString() + "> " + I18n.get("lv_bu.last_words"));
-                    Component dongZhuoWords = Component.literal("<" + attacked.getName().getString() + "> " + I18n.get("dong_zhuo.last_words"));
+                    Component lvBuWords = new TextComponent("<" + lvBu.getName().getString() + "> " + I18n.get("lv_bu.last_words"));
+                    Component dongZhuoWords = new TextComponent("<" + attacked.getName().getString() + "> " + I18n.get("dong_zhuo.last_words"));
 
                     lvBu.displayClientMessage(lvBuWords, false);
                     lvBu.displayClientMessage(dongZhuoWords, false);
 
-                    if (attacked instanceof Player dongZhuo) {
+                    if (attacked instanceof Player) {
+                        Player dongZhuo = (Player) attacked;
                         dongZhuo.displayClientMessage(lvBuWords, false);
                         dongZhuo.displayClientMessage(dongZhuoWords, false);
                     }
