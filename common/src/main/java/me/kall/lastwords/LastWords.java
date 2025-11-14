@@ -12,7 +12,7 @@ public final class LastWords {
     public static void init() {
         CONFIG = JsonConfig.create(MOD_ID, "1")
                 .put("EffectApplicable", true)
-                .put("EffectDuration", -1)
+                .put("EffectDuration", 200)
                 .put("EffectAmplifier", 120)
                 .initialize();
         effect = CONFIG.getBoolean("EffectApplicable");
