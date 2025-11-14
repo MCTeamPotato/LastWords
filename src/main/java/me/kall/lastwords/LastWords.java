@@ -3,6 +3,7 @@ package me.kall.lastwords;
 import me.kall.lastwords.ext.DongZhuo;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -12,20 +13,20 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(LastWords.MOD_ID)
 public final class LastWords {
     public static final String MOD_ID = "lastwords";
     public static final String MOD_NAME = "LastWords";
 
-    public LastWords(FMLJavaModLoadingContext context) {
-        context.registerConfig(ModConfig.Type.COMMON, Config.INSTANCE);
+    public LastWords() {
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.INSTANCE);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, (LivingDamageEvent event) -> {
             if (event.isCanceled()) return;
-            LivingEntity attacked = event.getEntity();
+            LivingEntity attacked = event.getEntityLiving();
             Entity attacker = event.getSource().getEntity();
             if (attacker instanceof Player lvBu && event.getAmount() >= attacked.getHealth()) {
                 if (attacked instanceof Player || attacked.isAlliedTo(lvBu)) {
@@ -35,8 +36,8 @@ public final class LastWords {
                         return;
                     }
 
-                    Component lvBuWords = Component.literal("<" + lvBu.getName().getString() + "> " + I18n.get("lv_bu.last_words"));
-                    Component dongZhuoWords = Component.literal("<" + attacked.getName().getString() + "> " + I18n.get("dong_zhuo.last_words"));
+                    Component lvBuWords = new TextComponent("<" + lvBu.getName().getString() + "> " + I18n.get("lv_bu.last_words"));
+                    Component dongZhuoWords = new TextComponent("<" + attacked.getName().getString() + "> " + I18n.get("dong_zhuo.last_words"));
 
                     lvBu.displayClientMessage(lvBuWords, false);
                     lvBu.displayClientMessage(dongZhuoWords, false);
