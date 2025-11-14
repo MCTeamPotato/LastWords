@@ -28,7 +28,8 @@ public final class LastWords {
             if (event.isCanceled()) return;
             LivingEntity attacked = event.getEntityLiving();
             Entity attacker = event.getSource().getEntity();
-            if (attacker instanceof Player lvBu && event.getAmount() >= attacked.getHealth()) {
+            if (attacker instanceof Player && event.getAmount() >= attacked.getHealth()) {
+                Player lvBu = (Player) attacker;
                 if (attacked instanceof Player || attacked.isAlliedTo(lvBu)) {
                     if (attacked.level.isClientSide()) return;
                     if (((DongZhuo)attacked).lastWords$said()) {
@@ -42,7 +43,8 @@ public final class LastWords {
                     lvBu.displayClientMessage(lvBuWords, false);
                     lvBu.displayClientMessage(dongZhuoWords, false);
 
-                    if (attacked instanceof Player dongZhuo) {
+                    if (attacked instanceof Player) {
+                        Player dongZhuo = (Player) attacked;
                         dongZhuo.displayClientMessage(lvBuWords, false);
                         dongZhuo.displayClientMessage(dongZhuoWords, false);
                     }
