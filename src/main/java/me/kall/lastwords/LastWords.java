@@ -63,7 +63,7 @@ public final class LastWords {
             ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
             builder.push(MOD_NAME);
             EFFECT = builder.comment("Whether to apply weakness and slowness effect on Dong Zhuo when saying last words.").define("WeakAndSlow", true);
-            EFFECT_DURATION = builder.comment("-1 means infinite effect duration").defineInRange("EffectDuration", -1, -1, Integer.MAX_VALUE);
+            EFFECT_DURATION = builder.comment("-1 means infinite effect duration").defineInRange("EffectDuration", 200, 200, Integer.MAX_VALUE);
             EFFECT_LEVEL = builder.defineInRange("EffectAmplifier", 120, 0, 120);
             builder.pop();
             INSTANCE = builder.build();
