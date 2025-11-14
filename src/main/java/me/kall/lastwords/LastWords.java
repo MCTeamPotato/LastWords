@@ -13,13 +13,16 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(LastWords.MOD_ID)
 public final class LastWords {
     public static final String MOD_ID = "lastwords";
     public static final String MOD_NAME = "LastWords";
 
-    public LastWords() {
+    public LastWords(FMLJavaModLoadingContext context) {
+        context.registerConfig(ModConfig.Type.COMMON, Config.INSTANCE);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, (LivingDamageEvent event) -> {
             if (event.isCanceled()) return;
             LivingEntity attacked = event.getEntity();
