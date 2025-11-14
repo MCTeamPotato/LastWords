@@ -29,7 +29,7 @@ public final class LastWords {
             Entity attacker = event.getSource().getEntity();
             if (attacker instanceof Player lvBu && event.getAmount() >= attacked.getHealth()) {
                 if (attacked instanceof Player || attacked.isAlliedTo(lvBu)) {
-                    if (attacked.level().isClientSide()) return;
+                    if (attacked.level.isClientSide()) return;
                     if (((DongZhuo)attacked).lastWords$said()) {
                         ((DongZhuo)attacked).lastWords$setSaid(false);
                         return;
