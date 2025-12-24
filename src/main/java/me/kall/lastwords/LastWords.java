@@ -3,6 +3,7 @@ package me.kall.lastwords;
 import me.kall.lastwords.ext.DongZhuo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -20,8 +21,8 @@ import java.util.function.Supplier;
 
 @Mod(LastWords.MOD_ID)
 public final class LastWords {
-    private static final Supplier<String> LV_BU = () -> Component.translatable("lv_bu.last_words").getString();
-    private static final Supplier<String> DONG_ZHUO = () -> Component.translatable("dong_zhuo.last_words").getString();
+    private static final Supplier<String> LV_BU = () -> new TranslatableComponent("lv_bu.last_words").getString();
+    private static final Supplier<String> DONG_ZHUO = () -> new TranslatableComponent("dong_zhuo.last_words").getString();
 
     public static final String MOD_ID = "lastwords";
     public static final String MOD_NAME = "LastWords";
