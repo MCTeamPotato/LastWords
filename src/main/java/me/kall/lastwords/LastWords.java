@@ -1,7 +1,6 @@
 package me.kall.lastwords;
 
 import me.kall.lastwords.ext.DongZhuo;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -16,8 +15,13 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
+import java.util.function.Supplier;
+
 @Mod(LastWords.MOD_ID)
 public final class LastWords {
+    private static final Supplier<String> LV_BU = () -> Component.translatable("lv_bu.last_words").getString();
+    private static final Supplier<String> DONG_ZHUO = () -> Component.translatable("dong_zhuo.last_words").getString();
+
     public static final String MOD_ID = "lastwords";
     public static final String MOD_NAME = "LastWords";
 
@@ -35,8 +39,8 @@ public final class LastWords {
                         return;
                     }
 
-                    Component lvBuWords = Component.literal("<" + lvBu.getName().getString() + "> " + I18n.get("lv_bu.last_words"));
-                    Component dongZhuoWords = Component.literal("<" + attacked.getName().getString() + "> " + I18n.get("dong_zhuo.last_words"));
+                    Component lvBuWords = Component.literal("<" + lvBu.getName().getString() + "> " + LV_BU.get());
+                    Component dongZhuoWords = Component.literal("<" + attacked.getName().getString() + "> " + DONG_ZHUO.get());
 
                     lvBu.displayClientMessage(lvBuWords, false);
                     lvBu.displayClientMessage(dongZhuoWords, false);
