@@ -1,5 +1,6 @@
 package me.kall.lastwords;
 
+import net.minecraft.network.chat.Component;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -8,8 +9,13 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.Supplier;
+
 @Mod(LastWords.MOD_ID)
 public final class LastWords {
+    public static final Supplier<String> LV_BU = () -> Component.translatable("lv_bu.last_words").getString();
+    public static final Supplier<String> DONG_ZHUO = () -> Component.translatable("dong_zhuo.last_words").getString();
+
     public static final String MOD_ID = "lastwords";
     public static final String MOD_NAME = "LastWords";
 
