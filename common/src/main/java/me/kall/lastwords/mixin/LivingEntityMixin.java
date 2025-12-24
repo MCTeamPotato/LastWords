@@ -58,8 +58,8 @@ public abstract class LivingEntityMixin implements DongZhuo {
                     return;
                 }
 
-                Component lvBuWords = Component.literal("<" + lvBu.getName().getString() + "> " + I18n.get("lv_bu.last_words"));
-                Component dongZhuoWords = Component.literal("<" + attacked.getName().getString() + "> " + I18n.get("dong_zhuo.last_words"));
+                Component lvBuWords = Component.literal("<" + lvBu.getName().getString() + "> " + LastWords.LV_BU.get());
+                Component dongZhuoWords = Component.literal("<" + attacked.getName().getString() + "> " + LastWords.DONG_ZHUO.get());
 
                 lvBu.displayClientMessage(lvBuWords, false);
                 lvBu.displayClientMessage(dongZhuoWords, false);
